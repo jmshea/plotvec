@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-%matplotlib inline
 
 def plotvec(*argv, chain = False, labels=False, newfig=True,
             legendloc='best', color_offset=0):
