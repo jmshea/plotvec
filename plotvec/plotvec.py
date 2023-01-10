@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def plotvec(*argv, chain=False, labels=False, newfig=True,
-            legendloc='best', color_offset=0,
+            legendloc='best', color_offset=0, width=None,
             square_aspect_ratio=True):
   """ plot a sequence of 2-d vectors
 
@@ -31,15 +31,19 @@ def plotvec(*argv, chain=False, labels=False, newfig=True,
   color_offset: int, default: 0
          Shift color sequence by fixed value
 
+  width: None or number
+         Width of arrow shaft, also affects head size. Typically float around
+         0.005 times the width of the plot.
+
   square_aspect_ratio: book, default: True
          If True (default), make plots square; otherwise, default aspect ratio
 
   Returns
   ----------
   None
-  
+
   """
-  
+
   xmin=0
   xmax=-1000000
   ymin=0
@@ -51,11 +55,11 @@ def plotvec(*argv, chain=False, labels=False, newfig=True,
   # Plot the vectors
   for i, head in enumerate(argv):
     if type(labels) == bool:
-      plt.quiver(*origin, *head,
+      plt.quiver(*origin, *head, width=width, 
                  angles='xy',scale_units='xy',scale=1,
                  color='C'+str(i+color_offset))
     else:
-      plt.quiver(*origin, *head,
+      plt.quiver(*origin, *head, width=width, 
                  angles='xy',scale_units='xy',scale=1,
                  color='C'+str(i+color_offset), label=labels[i])
     xmin=min(xmin,head[0])
