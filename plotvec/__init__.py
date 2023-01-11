@@ -10,5 +10,5 @@ for the book Introduction to Data Science for Engineers
 All files in the package are distributed under the MIT License
 '''
 
-__version__ = '1.3'
+__version__ = '1.3.5'
 from .plotvec import plotvec

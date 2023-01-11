@@ -35,8 +35,10 @@ def plotvec(*argv, chain=False, labels=None, newfig=True,
   color_offset: int, default: 0
          Shift color sequence by fixed value
 
-  alpha: float
-         Transparency alpha, should be between 0 (fully transparent) and 1 (solid)
+  alpha: numeric or list or tuple of numeric
+         Transparency alpha(s), should be between 0 (fully transparent) and 1 (solid).
+         If numeric, then same value is applied to all vectors. Otherwise, alpha for
+         each vector must be specified
 
   width: None or number
          Width of arrow shaft, also affects head size. Typically float around
@@ -69,12 +71,17 @@ def plotvec(*argv, chain=False, labels=None, newfig=True,
   else:
     my_labels = [None]*len(argv)
 
+  if type(alpha) == int or type(alpha) == float:
+    alphas = [alpha] * len(argv)
+  else:
+    alphas = alpha
+
   for i, head in enumerate(argv):
     if labels:
       label=labels[i]
     plt.quiver(*origin, *head, width=width, 
                angles='xy',scale_units='xy',scale=1,
-               color=colors[i], alpha=alpha,
+               color=colors[i], alpha=alphas[i],
                label=my_labels[i])
     xmin=min(xmin,head[0])
     xmax=max(xmax,head[0])
