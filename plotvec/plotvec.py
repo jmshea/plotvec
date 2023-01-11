@@ -1,9 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def plotvec(*argv, chain=False, labels=False, newfig=True,
-            legendloc='best', color_offset=0, width=None,
-            square_aspect_ratio=True):
+def plotvec(*argv, chain=False, labels=None, newfig=True,
+            legendloc='best', colors= None, color_offset=0, alpha=1,
+            width=None, square_aspect_ratio=True):
   """ plot a sequence of 2-d vectors
 
   Uses Matplotlib to plot 2-d vectors as directional arrows. Allows
@@ -28,8 +28,15 @@ def plotvec(*argv, chain=False, labels=False, newfig=True,
   legendloc: string or int, default: 'best'
          Argument for legend location passed to Matplotlib
 
+  colors: list or tuple
+         A list or tuple of colors acceptable to Matplotlib. Must be of same
+         size as number of vectors to plot
+
   color_offset: int, default: 0
          Shift color sequence by fixed value
+
+  alpha: float
+         Transparency alpha, should be between 0 (fully transparent) and 1 (solid)
 
   width: None or number
          Width of arrow shaft, also affects head size. Typically float around
@@ -52,16 +59,23 @@ def plotvec(*argv, chain=False, labels=False, newfig=True,
   if newfig:
     plt.figure()
 
+  if not colors:
+    colors = ['C'+ str(i+color_offset) for i in range(len(argv))]
+
+
   # Plot the vectors
+  if labels:
+    my_labels=labels
+  else:
+    my_labels = [None]*len(argv)
+
   for i, head in enumerate(argv):
-    if type(labels) == bool:
-      plt.quiver(*origin, *head, width=width, 
-                 angles='xy',scale_units='xy',scale=1,
-                 color='C'+str(i+color_offset))
-    else:
-      plt.quiver(*origin, *head, width=width, 
-                 angles='xy',scale_units='xy',scale=1,
-                 color='C'+str(i+color_offset), label=labels[i])
+    if labels:
+      label=labels[i]
+    plt.quiver(*origin, *head, width=width, 
+               angles='xy',scale_units='xy',scale=1,
+               color=colors[i], alpha=alpha,
+               label=my_labels[i])
     xmin=min(xmin,head[0])
     xmax=max(xmax,head[0])
     ymin=min(ymin,head[1])
@@ -82,5 +96,5 @@ def plotvec(*argv, chain=False, labels=False, newfig=True,
     ax.set_aspect('equal', adjustable='box')
 
   # Add legend if user passed labels
-  if type(labels) != bool:
+  if labels:
     plt.legend(loc=legendloc);
