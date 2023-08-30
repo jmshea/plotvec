@@ -1,9 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def plotvec(*argv, chain=False, labels=None, newfig=True,
+def plotvec(*argv, tail=[0,0], chain=False, labels=None, newfig=True,
             legendloc='best', colors= None, color_offset=0, alpha=1,
-            width=None, square_aspect_ratio=True):
+            width=None, square_aspect_ratio=True, plotsum=False):
   """ plot a sequence of 2-d vectors
 
   Uses Matplotlib to plot 2-d vectors as directional arrows. Allows
@@ -15,6 +15,9 @@ def plotvec(*argv, chain=False, labels=None, newfig=True,
   ----------
   *argv: lists or NumPy vectors
          One or more 2-d vectors
+
+  tail: list or NumPy vector, default: [0,0]
+        location of tail of (first) vector
 
   chain: bool, default: False
          Whether to place tail of vector at head of previous vector
@@ -47,6 +50,10 @@ def plotvec(*argv, chain=False, labels=None, newfig=True,
   square_aspect_ratio: book, default: True
          If True (default), make plots square; otherwise, default aspect ratio
 
+  plotsum: bool, default: False
+           If True, plot a vector from the initial tail to the final head, representing
+           the sum of the vectors
+
   Returns
   ----------
   None
@@ -57,13 +64,13 @@ def plotvec(*argv, chain=False, labels=None, newfig=True,
   xmax=-1000000
   ymin=0
   ymax=-1000000
-  origin=[0,0]
   if newfig:
     plt.figure()
 
   if not colors:
-    colors = ['C'+ str(i+color_offset) for i in range(len(argv))]
+    colors = ['C'+ str(i+color_offset) for i in range(len(argv)+1)]
 
+  original_tail = tail
 
   # Plot the vectors
   if labels:
@@ -72,23 +79,23 @@ def plotvec(*argv, chain=False, labels=None, newfig=True,
     my_labels = [None]*len(argv)
 
   if type(alpha) == int or type(alpha) == float:
-    alphas = [alpha] * len(argv)
+    alphas = [alpha] * (len(argv)+1)
   else:
     alphas = alpha
 
   for i, head in enumerate(argv):
     if labels:
       label=labels[i]
-    plt.quiver(*origin, *head, width=width, 
+    plt.quiver(*tail, *head, width=width, 
                angles='xy',scale_units='xy',scale=1,
                color=colors[i], alpha=alphas[i],
                label=my_labels[i])
-    xmin=min(xmin,head[0])
-    xmax=max(xmax,head[0])
-    ymin=min(ymin,head[1])
-    ymax=max(ymax,head[1])
+    xmin=min(xmin,head[0], tail[0])
+    xmax=max(xmax,head[0], tail[0])
+    ymin=min(ymin,head[1], tail[1])
+    ymax=max(ymax,head[1], tail[1])
     if chain:
-      origin = head
+      tail += head
 
 
   # Set limits based on vector dimensions and add axis lines
@@ -101,6 +108,19 @@ def plotvec(*argv, chain=False, labels=None, newfig=True,
   if square_aspect_ratio:
     ax = plt.gca()
     ax.set_aspect('equal', adjustable='box')
+
+  # Plot vector sum if requested
+
+
+  if plotsum:
+    plt.plot([original_tail[0], 0.1*original_tail[0]+0.9*tail[0]],
+             [original_tail[1], 0.1*original_tail[1]+0.9*tail[1]],
+                  linewidth=3, ls='--',
+             color='C'+str(len(argv)) )
+    plt.quiver(*[0.1*original_tail[0]+0.9*tail[0],0.1*original_tail[1]+0.9*tail[1]],
+               *(0.08*(np.array(tail)-np.array(original_tail))),
+               angles='xy',scale_units='xy',
+               scale=1, linewidth=1, color='C'+str(len(argv)) )
 
   # Add legend if user passed labels
   if labels:
