@@ -140,3 +140,19 @@ def plotvec(*argv, tail=[0,0], chain=False, labels=None, newfig=True,
   # Add legend if user passed labels
   if labels:
     plt.legend(loc=legendloc);
+
+def plotvecR(*argv, tail=[0,0], chain=False, labels=None, newfig=True,
+            legendloc='best', colors= None, color_offset=0, alpha=1,
+            width=None,  plotsum=False):
+  """ plot a sequence of 2-d vectors using plotvec with rectangular aspect ratio
+
+  Shortcut for calling plotvec() with square_aspect_ratio=False
+
+  See plotvec() help for other information
+
+  """
+
+  plotvec(*argv, tail=tail, chain=chain, labels=labels, newfig=newfig,
+          legendloc=legendloc, colors=colors, color_offset=color_offset, alpha=alpha,
+          width=width, square_aspect_ratio=False, plotsum=plotsum)
+
