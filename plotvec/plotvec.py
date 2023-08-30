@@ -60,12 +60,22 @@ def plotvec(*argv, tail=[0,0], chain=False, labels=None, newfig=True,
 
   """
 
-  xmin=0
-  xmax=-1000000
-  ymin=0
-  ymax=-1000000
+  xmin = 1e6
+  xmax = -1e6
+  ymin = 1e6
+  ymax = -1e6
   if newfig:
     plt.figure()
+  else:
+    xmin, xmax = plt.xlim()
+    ymin, ymax = plt.ylim()
+
+  xmin=min(xmin, tail[0])
+  xmax=max(xmax, tail[0])
+  ymin=min(ymin, tail[1])
+  ymax=max(ymax, tail[1])
+
+  
 
   if not colors:
     colors = ['C'+ str(i+color_offset) for i in range(len(argv)+1)]
@@ -90,12 +100,17 @@ def plotvec(*argv, tail=[0,0], chain=False, labels=None, newfig=True,
                angles='xy',scale_units='xy',scale=1,
                color=colors[i], alpha=alphas[i],
                label=my_labels[i])
-    xmin=min(xmin,head[0], tail[0])
-    xmax=max(xmax,head[0], tail[0])
-    ymin=min(ymin,head[1], tail[1])
-    ymax=max(ymax,head[1], tail[1])
     if chain:
       tail += head
+      xmin=min(xmin, tail[0])
+      xmax=max(xmax, tail[0])
+      ymin=min(ymin, tail[1])
+      ymax=max(ymax, tail[1])
+    else:
+      xmin=min(xmin, head[0])
+      xmax=max(xmax, head[0])
+      ymin=min(ymin, head[1])
+      ymax=max(ymax, head[1])
 
 
   # Set limits based on vector dimensions and add axis lines
