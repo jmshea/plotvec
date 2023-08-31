@@ -70,6 +70,12 @@ def plotvec(*argv, tail=[0,0], chain=False, labels=None, newfig=True,
     xmin, xmax = plt.xlim()
     ymin, ymax = plt.ylim()
 
+    # Adjust to compensate for extra space left around vectors
+    xmin += 1
+    xmax -= 1
+    ymin += 1
+    ymax -= 1
+
   xmin=min(xmin, tail[0])
   xmax=max(xmax, tail[0])
   ymin=min(ymin, tail[1])
