@@ -4,9 +4,11 @@
 
 Let's start by loading the `plotvec()` function and plotting a single vector:
 
-\begin{align*}
-\mathbf{a} &= [2,3]^T
-\end{align*}
+
+$$
+\mathbf{a} = [2,3]^T
+$$
+
 
 
 ```python
@@ -26,12 +28,13 @@ plotvec(a)
 
 We can add multiple vectors to the diagram easily. Let's add these vectors:
 
-Let's start by loading the `plotvec()` function and plotting a single vector:
+$$
+\mathbf{b} =[1,-2]^T 
+$$
 
-\begin{align*}
-\mathbf{b} &=[1,-2]^T
-\mathbf{c} &=[-1,-1]^T
-\end{align*}
+$$
+\mathbf{c} =[-1,-1]^T
+$$
 
 
 ```python
