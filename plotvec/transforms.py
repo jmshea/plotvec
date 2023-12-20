@@ -29,6 +29,7 @@ def plot_field (matrix=np.eye(2), field_width=3, point_spacing=0.5,
     Matplotlib colormap
   '''
 
+  assert matrix.shape == (2,2), "matrix argument must be a 2x2 array"
 
   cmap = mpl.colormaps[colormap]
 

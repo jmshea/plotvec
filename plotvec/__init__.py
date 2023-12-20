@@ -10,7 +10,7 @@ for the book Introduction to Data Science for Engineers
 All files in the package are distributed under the MIT License
 '''
 
-__version__ = '1.6.0'
+__version__ = '1.6.1'
 
 from .plotvec import plotvec, plotvecR
 from .transforms import plot_field
