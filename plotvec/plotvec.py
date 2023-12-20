@@ -60,6 +60,18 @@ def plotvec(*argv, tail=[0,0], chain=False, labels=None, newfig=True,
 
   """
 
+  # pre-process input vectors to make sure they are the right shape and size
+  heads=[]
+  for i, head in enumerate(argv):
+    if type(head) != np.ndarray:
+      head = np.array(head)
+    if head.ndim > 1:
+      head = head.flatten()
+
+    assert len(head) == 2, 'All vectors must be 2D'
+    heads += [head]
+
+
   xmin = 1e6
   xmax = -1e6
   ymin = 1e6
@@ -81,7 +93,6 @@ def plotvec(*argv, tail=[0,0], chain=False, labels=None, newfig=True,
   ymin=min(ymin, tail[1])
   ymax=max(ymax, tail[1])
 
-  
 
   if not colors:
     colors = ['C'+ str(i+color_offset) for i in range(len(argv)+1)]
@@ -99,7 +110,7 @@ def plotvec(*argv, tail=[0,0], chain=False, labels=None, newfig=True,
   else:
     alphas = alpha
 
-  for i, head in enumerate(argv):
+  for i, head in enumerate(heads):
     if labels:
       label=labels[i]
     plt.quiver(*tail, *head, width=width, 
