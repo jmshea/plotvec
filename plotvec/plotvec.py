@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 def plotvec(*argv, tail=[0,0], chain=False, labels=None, newfig=True,
             legendloc='best', colors= None, color_offset=0, alpha=1,
             width=None, square_aspect_ratio=True, plotsum=False):
@@ -145,18 +146,26 @@ def plotvec(*argv, tail=[0,0], chain=False, labels=None, newfig=True,
 
 
   if plotsum:
-    plt.plot([original_tail[0], 0.1*original_tail[0]+0.9*tail[0]],
-             [original_tail[1], 0.1*original_tail[1]+0.9*tail[1]],
-                  linewidth=3, ls='--',
+    if width == None:
+        width=1
+    sum_len = np.linalg.norm(tail - original_tail)
+    arrow_len = min(0.22, 0.5*sum_len )
+    arrow_proportion = arrow_len/sum_len
+    plt.plot([original_tail[0], arrow_proportion*original_tail[0] + (1-arrow_proportion)*tail[0]],
+             [original_tail[1], arrow_proportion*original_tail[1] + (1-arrow_proportion)*tail[1]],
+                  linewidth=2*width, ls='--',
              color='C'+str(len(argv)) )
-    plt.quiver(*[0.1*original_tail[0]+0.9*tail[0],0.1*original_tail[1]+0.9*tail[1]],
-               *(0.08*(np.array(tail)-np.array(original_tail))),
+    plt.quiver(*[arrow_proportion*original_tail[0] + (1-arrow_proportion)*tail[0],
+                 arrow_proportion*original_tail[1] + (1-arrow_proportion)*tail[1]],
+               *(0.9*arrow_proportion*(np.array(tail)-np.array(original_tail))),
                angles='xy',scale_units='xy',
-               scale=1, linewidth=1, color='C'+str(len(argv)) )
+               scale=1, linewidth=2*width, color='C'+str(len(argv)) )
 
   # Add legend if user passed labels
   if labels:
     plt.legend(loc=legendloc);
+
+
 
 def plotvecR(*argv, tail=[0,0], chain=False, labels=None, newfig=True,
             legendloc='best', colors= None, color_offset=0, alpha=1,
