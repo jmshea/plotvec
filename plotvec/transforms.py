@@ -1,9 +1,64 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib as mpl
+from .plotvec import plotvec
 
-def plot_field (matrix=np.eye(2), field_width=3, point_spacing=0.5,
-                preserve_axes=True, colormap='plasma'):
+def transform_unit_vecs(matrix, num_vectors=16, colormap='plasma'):
+  ''' Plot the outputs of a linear transform on radial unit vectors
+
+  Generates unit vectors that are uniformly spaced in angle around the
+  origin, applies the linear transform to the vectors, and plots the
+  input vectors and output vectors
+
+  Parameters
+  ----------
+  matrix : ndarray
+    2D matrix that specifies the linear transform
+
+  num_vectors: int
+    number of vectors 
+
+  colormap: string
+    Matplotlib colormap
+  '''
+
+  assert matrix.shape == (2,2), "matrix argument must be a 2x2 array"
+  unit_vectors = np.zeros((num_vectors,2))
+
+
+  cmap = mpl.colormaps[colormap]
+
+  fig, axs = plt.subplots(1, 2, figsize=(8,4) )
+
+  # Calculate and plot unit vectors
+  plt.sca(axs[0])
+  for i in range(num_vectors):
+    unit_vectors[i] = [np.cos(2*np.pi*i/num_vectors), np.sin(2*np.pi*i/num_vectors)  ]
+    rgba=cmap(i/num_vectors)
+    plotvec(unit_vectors[i], colors=[rgba], newfig=False)
+
+  plt. xlim(-1.1, 1.1)
+  plt. ylim(-1.1, 1.1);
+  plt.title('16 unit vectors evenly spaced\naround the unit circle')
+
+  # Calculate and plot transformed vectors
+  plt.sca(axs[1])
+  for i, vector in enumerate(unit_vectors):
+    rgba=cmap(i/num_vectors)
+    plotvec(matrix @ vector, colors=[rgba], newfig=False)
+
+  plt.xlim(-4,4)
+  plt.ylim(-4,4);
+  plt.hlines(0,-4,4, 'k', linewidth=0.5)
+  plt.title('Output vectors when unit vectors\nare left-multiplied by $\mathbf{matrix}$')
+
+  plt.tight_layout()
+
+
+
+
+def transform_field (matrix=np.eye(2), field_width=3, point_spacing=0.5,
+                     preserve_axes=True, colormap='plasma'):
 
   ''' Plot the outputs of a linear transform on a square field of points
 
