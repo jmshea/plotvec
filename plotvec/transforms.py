@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 from .plotvec import plotvec
 
-def transform_unit_vecs(matrix, num_vectors=16, colormap='plasma'):
+def transform_unit_vecs(matrix, num_vectors=16, colormap='plasma', show_input_vecs=True):
   ''' Plot the outputs of a linear transform on radial unit vectors
 
   Generates unit vectors that are uniformly spaced in angle around the
@@ -20,6 +20,9 @@ def transform_unit_vecs(matrix, num_vectors=16, colormap='plasma'):
 
   colormap: string
     Matplotlib colormap
+
+  show_input_vecs: boolean
+    Whether to include a subplot with the points before the transformation
   '''
 
   assert matrix.shape == (2,2), "matrix argument must be a 2x2 array"
@@ -28,21 +31,27 @@ def transform_unit_vecs(matrix, num_vectors=16, colormap='plasma'):
 
   cmap = mpl.colormaps[colormap]
 
-  fig, axs = plt.subplots(1, 2, figsize=(8,4) )
+  if show_input_vecs:
+    fig, axs = plt.subplots(1, 2, figsize=(8,4) )
+  else: 
+    fig, ax = plt.subplots(1, 1)
+    axs = [ax]
 
   # Calculate and plot unit vectors
   plt.sca(axs[0])
   for i in range(num_vectors):
     unit_vectors[i] = [np.cos(2*np.pi*i/num_vectors), np.sin(2*np.pi*i/num_vectors)  ]
     rgba=cmap(i/num_vectors)
-    plotvec(unit_vectors[i], colors=[rgba], newfig=False)
+    if show_input_vecs:
+      plotvec(unit_vectors[i], colors=[rgba], newfig=False)
 
-  plt. xlim(-1.1, 1.1)
-  plt. ylim(-1.1, 1.1);
-  plt.title('16 unit vectors evenly spaced\naround the unit circle')
+  if show_input_vecs:
+    plt. xlim(-1.1, 1.1)
+    plt. ylim(-1.1, 1.1);
+    plt.title('16 unit vectors evenly spaced\naround the unit circle')
 
   # Calculate and plot transformed vectors
-  plt.sca(axs[1])
+  plt.sca(axs[-1])
   for i, vector in enumerate(unit_vectors):
     rgba=cmap(i/num_vectors)
     plotvec(matrix @ vector, colors=[rgba], newfig=False)
@@ -50,7 +59,8 @@ def transform_unit_vecs(matrix, num_vectors=16, colormap='plasma'):
   plt.xlim(-4,4)
   plt.ylim(-4,4);
   plt.hlines(0,-4,4, 'k', linewidth=0.5)
-  plt.title('Output vectors when unit vectors\nare left-multiplied by $\mathbf{matrix}$')
+  if show_input_vecs:
+    plt.title('Output vectors when unit vectors\nare left-multiplied by matrix')
 
   plt.tight_layout()
 
@@ -58,7 +68,7 @@ def transform_unit_vecs(matrix, num_vectors=16, colormap='plasma'):
 
 
 def transform_field (matrix=np.eye(2), field_width=3, point_spacing=0.5,
-                     preserve_axes=True, colormap='plasma'):
+                     preserve_axes=True, colormap='plasma', show_input_vecs=True):
 
   ''' Plot the outputs of a linear transform on a square field of points
 
@@ -82,6 +92,9 @@ def transform_field (matrix=np.eye(2), field_width=3, point_spacing=0.5,
 
   colormap: string
     Matplotlib colormap
+
+  show_input_vecs: boolean
+    Whether to include a subplot with the points before the transformation
   '''
 
   assert matrix.shape == (2,2), "matrix argument must be a 2x2 array"
@@ -92,17 +105,31 @@ def transform_field (matrix=np.eye(2), field_width=3, point_spacing=0.5,
                  point_spacing)
   ys = xs
 
+  if show_input_vecs:
+    fig, axs = plt.subplots(1, 2, figsize=(8, 4))
+  else:
+    fig, ax = plt.subplots(1, 1)
+    axs = [ax]
+
   for x in xs:
     for y in ys:
       angle = np.arctan2(y, x) 
       if angle < 0:
         angle += 2*np.pi
       rgba = cmap(angle / (2 * np.pi)   ) 
+      if show_input_vecs:
+        axs[0].scatter(x,y, 2, color=rgba)
       out = matrix @ np.array([x, y])
+      axs[-1].scatter(out[0], out[1], 2, color=rgba)
       plt.scatter(out[0], out[1], 2, color=rgba)
 
-  ax = plt.gca()
-  ax.axis('equal')
+  axs[0].axis('equal')
+  axs[-1].axis('equal')
   if preserve_axes:
     plt.xlim(-field_width, field_width)
     plt.ylim(-field_width, field_width)
+
+  if show_input_vecs:
+    axs[0].set_title('Square grid of input points')
+    axs[1].set_title('Points tranformed by left-multiplication by matrix')
+    plt.tight_layout()
