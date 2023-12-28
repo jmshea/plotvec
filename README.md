@@ -1,5 +1,7 @@
 # Making Attractive 2-D Vector Diagrams in Python with PlotVec
 
+*How do I make attractive vector diagrams in Python?* PlotVec makes plotting vectors easier.
+
 (Note that the figures below use my matplotlibrc file, which is included in the GitHub repository for plotvec.)
 
 Let's start by loading the `plotvec()` function and plotting a single vector:
