@@ -60,7 +60,7 @@ def transform_unit_vecs(matrix, num_vectors=16, colormap='plasma', show_input_ve
   plt.ylim(-4,4);
   plt.hlines(0,-4,4, 'k', linewidth=0.5)
   if show_input_vecs:
-    plt.title('Output vectors when unit vectors\nare left-multiplied by matrix')
+    plt.title('vectors Output when unit vectors\nare left-multiplied by matrix')
 
   plt.tight_layout()
 
@@ -98,6 +98,10 @@ def transform_field (matrix=np.eye(2), field_width=3, point_spacing=0.5,
   '''
 
   assert matrix.shape == (2,2), "matrix argument must be a 2x2 array"
+
+  # No need to output 2 graphs of same thing
+  if np.all( matrix == np.eye(2) ):
+    show_input_vecs=False
 
   cmap = mpl.colormaps[colormap]
 
