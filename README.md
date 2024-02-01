@@ -149,3 +149,57 @@ plt.annotate('5', (1.1, 1.9) );
 ![png](figs/output_16_0.png)
     
 
+## Illustrating the Effects of Two-dimensional Linear Transforms
+
+When an $n$-vector is left-multiplied by a $m \times n$ matrix, the output is an $m$-vector. Since we can do this for every possible $n$-vector, and the outputs will fill some subspace of all $m$-vectors, we consider the matrix to define a linear transformation from the real $n$-vectors to the real $m$-vectors.
+
+This is most easily visualized for linear transformations from $2$-vectors to other $2$-vectors, which is defined by a $2 \times 2$ matrix. 
+
+PlotVec has two functions to help visualize such transformations.
+
+A linear transformation of a 2-vector to another 2-vector can be considered to consist of a rotation and a scaling of the original vector. Because the transformation is linear, the amount of rotation and scaling only depends on the *direction* of the input vector and not the length of that vector. Thus, one way to visualize the effect of a linear transformation is to show how it rotates and scales all of the unit vectors. This is the purpose of the `transform_unit_vecs()` function. Its call signature is
+
+`transform_unit_vecs(matrix, num_vectors=16, colormap='plasma', show_input_vecs=True)`
+
+The most important argument is the only required one: the `matrix`. Let's illustrate the output for the following matrix:
+
+
+```python
+M = np.array([[0.5, -4],
+              [-2,  3]])
+```
+
+
+```python
+from plotvec import transform_unit_vecs
+
+transform_unit_vecs(M)
+```
+
+
+    
+![png](figs/output_21_0.png)
+    
+
+
+The left graph shows 16 unit vectors that are color-coded and uniformly spaced in phase. The right graph shows the 16-output vectors from left-multiplying the input vectors by the given matrix. The colors of the output vectors match the colors of the corresponding input vectors. By inspecting the input and output vectors, you can see that different input vectors are scaled and rotated by different amounts. 
+
+Another way to think about a linear transformation is think about it as stretching, rotating, and flipping space. We can visualize this by creating a field of points and then showing the location of those points after the transformation. PlotVec has a `transform_field()` function to do this. Again, it uses colors to indicate corresponding input and output points. 
+
+The code below use `transform_field()` to generate a uniformly spaced, rectangular set of input points and to show both these input points and the output points after the linear transformation using the `M` matrix in the example above. It sets the `preserve_axes` argument to `False` to allow the axes to expand to fit the output points, which occupy much more space then the input points.
+
+
+
+```python
+from plotvec import transform_field
+
+transform_field(M, preserve_axes=False)
+```
+
+
+    
+![png](figs/output_24_0.png)
+    
+
+
+The graphs show that the rectangular field of input points (on the left) is transformed into a parallelogram of points at the output (on the right).
