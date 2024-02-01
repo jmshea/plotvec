@@ -24,7 +24,7 @@ plotvec(a)
 
 
     
-![png](figs/output_2_0.png)
+![plotvec() output showing a graph of a single vector \[2, 3\]](figs/output_2_0.png)
     
 
 
@@ -49,7 +49,7 @@ plotvec(a, b, c)
 
 
     
-![png](figs/output_4_0.png)
+![plotvec() output showing a graph of three vectors that point in different directions](figs/output_4_0.png)
     
 
 
@@ -66,7 +66,7 @@ plotvecR(a, b, c)
 
 
     
-![png](figs/output_6_0.png)
+![plotvec() output showing a graph of three vectors without an equal aspect ratio](figs/output_6_0.png)
     
 
 
