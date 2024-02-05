@@ -1,6 +1,6 @@
 # Making Attractive 2-D Vector Diagrams in Python with PlotVec
 
-*How do I make attractive vector diagrams in Python?* PlotVec makes plotting vectors easier.
+*How do I make attractive vector diagrams in Python?* PlotVec makes plotting vectors easier.  PlotVec was created to enable interactive quizzes for readers of my book [*Foundations of Data Science with Python*](https://amzn.to/48cYila) [Affilate Link]
 
 (Note that the figures below use my matplotlibrc file, which is included in the GitHub repository for plotvec.)
 
@@ -203,3 +203,7 @@ transform_field(M, preserve_axes=False)
 
 
 The graphs show that the rectangular field of input points (on the left) is transformed into a parallelogram of points at the output (on the right).
+
+
+**As an Amazon Associate I earn from qualifying purchases.**
+
