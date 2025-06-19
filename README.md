@@ -1,6 +1,6 @@
 # Making Attractive 2-D Vector Diagrams in Python with PlotVec
 
-*How do I make attractive vector diagrams in Python?* PlotVec makes plotting vectors easier.
+*How do I make attractive vector diagrams in Python?* PlotVec makes plotting vectors easier.  PlotVec was created to enable interactive quizzes for readers of my book [*Foundations of Data Science with Python*](https://amzn.to/48cYila) [Affilate Link]
 
 (Note that the figures below use my matplotlibrc file, which is included in the GitHub repository for plotvec.)
 
@@ -24,7 +24,7 @@ plotvec(a)
 
 
     
-![png](figs/output_2_0.png)
+![plotvec() output showing a graph of a single vector \[2, 3\]](figs/output_2_0.png)
     
 
 
@@ -49,7 +49,7 @@ plotvec(a, b, c)
 
 
     
-![png](figs/output_4_0.png)
+![plotvec() output showing a graph of three vectors that point in different directions](figs/output_4_0.png)
     
 
 
@@ -66,7 +66,7 @@ plotvecR(a, b, c)
 
 
     
-![png](figs/output_6_0.png)
+![plotvec() output showing a graph of three vectors without an equal aspect ratio](figs/output_6_0.png)
     
 
 
@@ -88,7 +88,7 @@ plotvecR(a, b,
 
 
     
-![png](figs/output_8_0.png)
+![plotvec() output showing a graph of two vectors with captions](figs/output_8_0.png)
     
 
 
@@ -101,7 +101,7 @@ plotvec(c, tail=[2,1])
 
 
     
-![png](figs/output_10_0.png)
+![plotvec() output showing a graph of a vector with the tail not at the origin](figs/output_10_0.png)
     
 
 
@@ -114,7 +114,7 @@ plotvec(a, b, c, chain=True)
 
 
     
-![png](figs/output_12_0.png)
+![plotvec() output showing a graph of three "chained" vectors with each subsequent vector's tail at the previous vector's head](figs/output_12_0.png)
     
 
 
@@ -127,7 +127,7 @@ plotvec(a, b, c, chain=True, plotsum=True)
 
 
     
-![png](figs/output_14_0.png)
+![plotvec() showing a graph of three chained vectors and the vector sum](figs/output_14_0.png)
     
 
 
@@ -146,7 +146,7 @@ plt.annotate('5', (1.1, 1.9) );
 
 
     
-![png](figs/output_16_0.png)
+![Example of multiple calls of plotvec() using a single output figure](figs/output_16_0.png)
     
 
 ## Illustrating the Effects of Two-dimensional Linear Transforms
@@ -178,7 +178,7 @@ transform_unit_vecs(M)
 
 
     
-![png](figs/output_21_0.png)
+![Output of call to transform_unit_vecs(): left graph is 16 unit vectors evenly spaced in phase; right graph is transformed output vectors, with nonuniform angles and lengths ](figs/output_21_0.png)
     
 
 
@@ -198,8 +198,12 @@ transform_field(M, preserve_axes=False)
 
 
     
-![png](figs/output_24_0.png)
+![Output of transform_field(): left graphs shows rectangular field of points; right graph is output field of points, which is in shape of parallelogram](figs/output_24_0.png)
     
 
 
 The graphs show that the rectangular field of input points (on the left) is transformed into a parallelogram of points at the output (on the right).
+
+
+**As an Amazon Associate I earn from qualifying purchases.**
+
