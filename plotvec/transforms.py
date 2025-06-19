@@ -135,5 +135,5 @@ def transform_field (matrix=np.eye(2), field_width=3, point_spacing=0.5,
 
   if show_input_vecs:
     axs[0].set_title('Square grid of input points')
-    axs[1].set_title('Points tranformed by left-multiplication by matrix')
+    axs[1].set_title('Points transformed by left-multiplication by matrix')
     plt.tight_layout()
